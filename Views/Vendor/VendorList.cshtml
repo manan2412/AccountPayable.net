@@ -1,0 +1,88 @@
+﻿@model VendorListViewModel
+
+<h2 class="jumbotron text-center">Vendor Record</h2>
+<div>
+    <a class="btn btn-outline-success"
+       asp-controller="Vendor"
+       asp-action="VendorRecord"
+       asp-route-actionType="Add"
+       asp-route-filterId ="@Model.SelectedGroupNameFilterId">
+        Add new Vendor
+    </a>
+</div>
+@*<div>
+    <ul class="nav nav-pills">
+        @foreach (var vendorNameFilter in Model.vendorFilterList)
+        {
+            <li class="nav-item">
+                <a class="nav-link @Model.GetActiveNameFilter(vendorNameFilter)"
+                   asp-action="VendorList"
+                   asp-route-nameFilter="@vendorNameFilter"
+                   asp-route-nameGroupFilterId="@Model.SelectedGroupNameFilterId">
+                    @vendorNameFilter
+                </a>
+            </li>
+        }
+    </ul>
+</div>]*@
+@if (TempData["DeleteVendorName"] != null)
+            {
+<div class=" text-right pb-5">
+    <span class="alert alert-info pb-3">
+        The patient "@TempData["DeleteVendorName"]" was deleted.
+        <a asp-action="UndoDelete" asp-route-vendorId="@TempData["VendorID"]">Undo</a>
+        this delete.
+    </span>
+</div>
+            }
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Vendor</th>
+            <th>Address</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vendor in Model.Vendors)
+        {
+            @if (!vendor.IsDeleted) {
+            <tr>
+                <td>@vendor.VendorName</td>
+                <td>@vendor.VendorAddress1</td>
+                <td>
+                    <a asp-action="VendorInvoicesList"
+                       asp-controller="Vendor"
+                        asp-route-vendorId="@vendor.VendorId"
+                       asp-route-filterId ="@Model.SelectedGroupNameFilterId">
+                        Invoices</a><span class="linkSpacer"> |</span>
+                    <a asp-action="VendorRecord"
+                       asp-controller="Vendor"
+                       asp-route-vendorId="@vendor.VendorId"
+                       asp-route-filterId ="@Model.SelectedGroupNameFilterId"
+                       asp-route-actionType="Edit">Edit</a><span class="linkSpacer"> |</span>
+                    <a asp-action="SoftDelete"
+                       asp-controller="Vendor"
+                       asp-route-vendorId="@vendor.VendorId">Delete</a>
+                </td>
+            </tr>}
+        }
+    </tbody>
+</table>
+<div>
+    <ul class=" nav nav-pills">
+     
+        @foreach (var nameGroupFilter in Model.NameGroupFilters)
+        {
+            <li class="nav-item">
+                <a asp-action="VendorList"
+                   asp-route-filterExplicit = "true"
+                   asp-route-nameGroupFilterId="@nameGroupFilter.NameGroupId"
+                   
+                   class="nav-link @Model.GetActiveGroupNameFilter(nameGroupFilter.NameGroupId)">
+                    @nameGroupFilter.GroupName
+                </a>
+            </li>
+        }
+    </ul>
+</div>

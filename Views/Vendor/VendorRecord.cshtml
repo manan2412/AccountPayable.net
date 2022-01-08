@@ -1,0 +1,75 @@
+﻿@model VendorRecordViewModel
+<h2>@Model.ActionName a Vendor</h2>
+<form asp-action="VendorRecord" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+
+    <input type="hidden" asp-for="@Model.Vendor.VendorId" />
+    <input type="hidden" asp-for="@Model.ActionName" />
+
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorName">Name:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorName" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorAddress1">Address1:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorAddress1" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorAddress1"class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorAddress2">Address 2:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorAddress2" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorAddress2"class="text-danger"></span>
+    </div>    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorCity">City:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorCity" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorCity"class="text-danger"></span>
+    </div>    <div class="form-group">
+    <label asp-for="@Model.Vendor.VendorState">State:</label>
+    <input type="text" asp-for="@Model.Vendor.VendorState" class="form-control" />
+    <span asp-validation-for="@Model.Vendor.VendorState"class="text-danger"></span>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorZipCode">Zip-Code:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorZipCode" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorZipCode"class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorPhone">Phone:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorPhone" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorPhone"class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorContactFirstName"> Contact First Name:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorContactFirstName" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorContactFirstName"class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.VendorContactLastName">Contact Last Name:</label>
+        <input type="text" asp-for="@Model.Vendor.VendorContactLastName" class="form-control" />
+        <span asp-validation-for="@Model.Vendor.VendorContactLastName"class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.DefaultTermsId">Terms:</label>
+        <select asp-for="@Model.Vendor.DefaultTermsId" class="form-control">
+            @foreach (Term term in Model.Terms)
+            {
+                <option value="@term.TermsId">@term.TermsDescription</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Vendor.DefaultAccountNumber">Default acct #</label>
+        <select asp-for="@Model.Vendor.DefaultAccountNumber" class="form-control">
+            @foreach (GeneralLedgerAccount generalLedgerAccount in Model.GeneralLedgerAccounts)
+            {
+                <option value="@generalLedgerAccount.AccountNumber">@generalLedgerAccount.AccountDescription (@generalLedgerAccount.AccountNumber)</option>
+            }
+        </select>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary" value="@Model.ActionName" />
+        <a asp-action="VendorList" class="btn btn-secondary">Cancel</a>
+    </div>
+</div>
+</form>
